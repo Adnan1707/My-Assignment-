@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main>
+        <div class="m1"></div>
+        <div class="m3"></div>
+        <div class="m4">
+            <div class="m5">
+                <h1 class="m6">
+                    <img alt="Widget icon" class="img4" style="color:transparent" src="img/h1.webp"/>
+                    <div class="a1">for</div> 
+                    <div class="m7">
+                        <img alt="Widget icon" class="img1" style="color:transparent" src="img/chrome.svg"/>
+                    </div>
+                    <span class="transition-colors duration-200 text-yellow-300">& Cloud </span>
+                </h1>
+                <div class="gaming">
+                    <span class="g1">gaming </span>
+                </div>
+                <p class="m8">
+                    <span class="text-gray-300">Join us on the launch of gartcod by </span>
+                    <img alt="img5" class="img1" style="color:transparent" src="img/logo.webp"/>
+                </p>
+
+               
+                <div class="countdown">
+                    <span class="countdown-item" id="days">00</span>
+                    <span class="countdown-item" id="hours">00</span>
+                    <span class="countdown-item" id="minutes">00</span>
+                    <span class="countdown-item" id="seconds">00</span>
+                </div>
+                <div class="countdown1">
+                    <span class="countdown-item1" id="days">Days</span>
+                    <span class="countdown-item1" id="hours">Hrs</span>
+                    <span class="countdown-item1" id="minutes">Min</span>
+                    <span class="countdown-item1" id="seconds">Sec</span>
+                </div>
+                <div class="m9">
+                    <button class="m91">Claim Ticket</button>
+                </div>
+                
+                <div class="m10">
+                    <img alt="img5" class="img10" style="color:transparent" src="img/designer1.svg"/>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    var imageSources = [
+        "img/chrome.svg",
+        "img/mobile.svg",
+        "img/desktop.svg"
+    ];
+
+    var imgElement = document.querySelector('.img1');
+    var index = 0;
+
+    function showNextImage() {
+        imgElement.src = imageSources[index];
+        index = (index + 1) % imageSources.length;
+        setTimeout(showNextImage, 1000);
+    }
+
+    showNextImage();
+
+    // Countdown timer
+    function updateCountdown() {
+        var now = new Date().getTime();
+        var eventDate = new Date("2025-01-01T00:00:00").getTime();
+        var distance = eventDate - now;
+
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days.toString().padStart(2, '0');
+        document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+        document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+        document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Animation for the designer1 image
+    var designerImg = document.querySelector('.img10');
+    designerImg.style.position = 'absolute';
+    designerImg.style.left = '0px';
+    designerImg.style.top = '0px';
+
+    // Variable to track whether the animation should continue
+    var continueAnimation = true;
+
+    function animateDesignerImage(timestamp) {
+        var claimButton = document.querySelector('.m9 button');
+        var claimButtonRect = claimButton.getBoundingClientRect();
+        var targetLeft = claimButtonRect.left + window.scrollX;
+        var targetTop = claimButtonRect.top + window.scrollY;
+
+        var step = 2; // Adjust the step size as needed
+
+        var currentLeft = parseFloat(designerImg.style.left);
+        var currentTop = parseFloat(designerImg.style.top);
+
+        if (continueAnimation && (
+            currentLeft < targetLeft - step ||
+            currentLeft > targetLeft + step ||
+            currentTop < targetTop - step ||
+            currentTop > targetTop + step
+        )) {
+            designerImg.style.left = (currentLeft + step) + 'px';
+            designerImg.style.top = (currentTop + step) + 'px';
+            requestAnimationFrame(function (timestamp) {
+                animateDesignerImage(timestamp);
+            });
+        } else {
+            continueAnimation = false;
+        }
+    }
+
+    // Call the function to start the image animation
+    requestAnimationFrame(function (timestamp) {
+        animateDesignerImage(timestamp);
+    });
+});
+
+
+    </script>
+    
+</body>
+</html>
